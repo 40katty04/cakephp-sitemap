@@ -1,5 +1,5 @@
 {
-    "name": "cwbit/cakephp-sitemap",
+    "name": "mpinchuk/cakephp-sitemap",
     "description": "Sitemap Generator plugin for CakePHP 3.x apps",
     "type": "cakephp-plugin",
     "license" : "MIT",
