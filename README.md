@@ -6,7 +6,7 @@ Sitemap generator plugin for CakePHP 3x apps
 This package is available for easy installation through [Packagist](http://packagist.com)
 
 ```bash
-composer require cwbit/cakephp-sitemap "~1.0"
+composer require mpinchuk/cakephp-sitemap "~1.0"
 ```
 
 Then make sure to load the plugin normally in your app. e.g.
@@ -84,21 +84,42 @@ Here's a sample configuration straight from one of the projects using this plugi
             'Categories' => [
                 'cacheKey' => 'sitemap',
                 'finders' => [
-                    'visible' => [],
-                    ],
+                    'all' => [
+		    	'condition' => [
+			    'Categories.enabled' => true
+			]
+		    ],
+                ],
                 'xmlTags'=> [
-                    'loc' => 'url',
+                    'loc' => 'permalink',
                     'priority' => '0.9',
                     'changefreq' => 'always',
                 ],
             ],
-            'Items' => [
+            'Products' => [
                 'cacheKey' => 'sitemap',
                 'finders' => [
-                    'visible' => [],
-                    ],
+                    'all' => [
+		    	'condition' => [
+			    'Products.enabled' => 'true',
+			    function ($exp) {
+                            	return $exp->notIn('Products.status', 
+				    [
+				       'Stalled', 
+				       'Placed', 
+				       'Lost to Competition', 
+				       'Filled by Client', 
+				       'Cancelled'
+				    ]);
+                            }
+			],
+		    ],
+                ],
                 'xmlTags'=> [
-                    'loc' => 'permalink',
+                    'loc' => [
+                    	'urlBody' => '/product',
+                    	'queryParams' => ['productId' => 'id'] // queryParam => CollumnNameInDb
+                    ],
                     'priority' => '0.9',
                     'changefreq' => 'always',
                 ],
@@ -182,12 +203,12 @@ which produces the following
         <changefreq>always</changefreq>
     </url>
     <url>
-        <loc>http://example.com/product/spice-widgets/cayenne</loc>
+        <loc>http://example.com/product?productId=45673</loc>
         <priority>0.9</priority>
         <changefreq>always</changefreq>
     </url>
     <url>
-        <loc>http://example.com/product/posh-widgets/foobar</loc>
+        <loc>http://example.com/product?productId=89654</loc>
         <priority>0.9</priority>
         <changefreq>always</changefreq>
     </url>
