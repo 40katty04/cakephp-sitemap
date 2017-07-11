@@ -78,17 +78,31 @@ class SitemapsController extends AppController
 
             # loop through the found data and build the sitemap lines
             foreach ($data as $entity) :
-                $url = is_object($entity) ? $entity->get($c['loc']) : $entity[$c['loc']];
-                $url = is_array($url) ? $url + ['plugin'=>false] : $url;
+                if(is_array($c['loc'])){
+                    $url = '';
+                    if(isset($c['loc']['urlBody'])){
+                        $url = $c['loc']['urlBody'];
+                    }
+                    if(!empty($c['loc']['queryParams']) && is_array($c['loc']['queryParams'])){
+                        $params = [];
+                        foreach ($c['loc']['queryParams'] as $key => $queryParam) {
+                            $params[$key] = is_object($entity) ? $entity->get($queryParam) : $entity[$queryParam];
+                        }
+                        $url .= '?'.http_build_query($params);
+                    }
+                }
+                else{
+                    $url = is_object($entity) ? $entity->get($c['loc']) : $entity[$c['loc']];
+                    $url = is_array($url) ? $url + ['plugin'=>false] : $url;
+                }
                 $page = [];
                 $page['loc'] = Router::url($url, $fullBase = true);
                 $page['priority'] = $c['priority'];
                 $page['changefreq'] = $c['changefreq'];
                 $pages[] = $page;
             endforeach;
-
         endforeach;
-
+        
         $this->set(compact('pages'));
         $this->set('_serialize', false);
     }
