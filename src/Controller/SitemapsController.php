@@ -44,7 +44,7 @@ class SitemapsController extends AppController
 
     public function display()
     {
-        $this->viewBuilder()->layout('Sitemap.sitemap');
+        $this->viewBuilder()->setLayout('Sitemap.sitemap');
 
         $config = Configure::read('Sitemap');
 
@@ -63,7 +63,7 @@ class SitemapsController extends AppController
         foreach ($config['dynamic'] as $modelName => $options) :
             $c = Hash::merge($this->_defaultConfig, $options['xmlTags']);
 
-            $model = TableRegistry::get($modelName);
+            $model = TableRegistry::getTableLocator()->get($modelName);
 
             # build the model query using the finders
             $data = $model->find();
