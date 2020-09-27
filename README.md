@@ -6,7 +6,7 @@ Sitemap generator plugin for CakePHP 4.1 apps
 This package is available for easy installation through [Packagist](http://packagist.com)
 
 ```bash
-composer require 40katty04/cakephp-sitemap "^1.0"
+composer require 40katty04/cakephp-sitemap "~2.0"
 ```
 
 Then make sure to load the plugin normally in your app. e.g.
