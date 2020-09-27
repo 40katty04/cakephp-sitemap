@@ -63,7 +63,7 @@ class SitemapsController extends AppController
         foreach ($config['dynamic'] as $modelName => $options) :
             $c = Hash::merge($this->_defaultConfig, $options['xmlTags']);
 
-            $model = TableRegistry::getTableLocator()->get($modelName);
+            $model = $this->getTableLocator()->get($modelName);
 
             # build the model query using the finders
             $data = $model->find();
