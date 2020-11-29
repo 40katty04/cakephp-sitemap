@@ -1,6 +1,6 @@
 {
     "name": "40katty04/cakephp-sitemap",
-    "description": "Sitemap Generator plugin for CakePHP 3.x apps",
+    "description": "Sitemap Generator plugin for CakePHP 4.x apps",
     "type": "cakephp-plugin",
     "license" : "MIT",
     "require": {
