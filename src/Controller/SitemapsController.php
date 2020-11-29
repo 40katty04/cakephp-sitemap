@@ -25,7 +25,7 @@ class SitemapsController extends AppController
         'changefreq' => 'daily',
     ];
 
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
