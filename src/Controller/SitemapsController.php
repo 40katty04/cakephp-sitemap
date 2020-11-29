@@ -4,7 +4,7 @@ namespace Sitemap\Controller;
 
 use Cake\Utility\Hash;
 use Cake\Core\Configure;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Sitemap\Controller\AppController;
@@ -35,7 +35,7 @@ class SitemapsController extends AppController
     /**
      * Allow the display function if the Auth component is loaded
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         if (isset($this->Auth)) :
             $this->Auth->allow('display');
